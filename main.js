@@ -11,8 +11,11 @@ elec.app.whenReady().then(() => {
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         },
-        titleBarStyle: 'hidden'
-        
+        titleBarStyle: 'hidden',
+        // webPreferences: {
+        //     nodeIntegration: true
+        // }
+
     })
     window.loadFile('index.html')
     window.maximize()
@@ -21,6 +24,7 @@ elec.app.whenReady().then(() => {
             return window.webContents.send('SET_SOURCE', source.id)
         }
     })
+    require('./websocket.js')
 })
 
 elec.app.on('window-all-closed', () => {
