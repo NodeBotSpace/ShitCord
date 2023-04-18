@@ -42,5 +42,6 @@ elec.ipcMain.on('wsMsgSend',(event, msg)=>{
 })
 
 module.exports.init = (data) => {
+    console.log('Initializing WebSocket')
     window = data
 }
