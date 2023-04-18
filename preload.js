@@ -30,13 +30,7 @@ function handleError(e) {
   console.log(e)
 }
 
-// elec.ipcRenderer.addListener('wsMsg', msg => {
-//   console.log()
-//   let p = document.createElement('p')
-//   p.innerHTML = msg
-//   document.body.appendChild(p)
-// })
-
 elec.contextBridge.exposeInMainWorld('ws', {
-  send: (msg) => {elec.ipcRenderer.send('wsMsgSend',msg);console.log('PRELOAD MEOW')}
+  send: (msg) => {elec.ipcRenderer.send('wsMsgSend',msg)},
+  onMsg: (callback) => {elec.ipcRenderer.on('wsMsgIn',callback)}
 })

@@ -24,7 +24,7 @@ elec.app.whenReady().then(() => {
             return window.webContents.send('SET_SOURCE', source.id)
         }
     })
-    require('./websocket.js')
+    require('./websocket.js').init(window)
 })
 
 elec.app.on('window-all-closed', () => {

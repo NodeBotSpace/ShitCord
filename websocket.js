@@ -2,7 +2,7 @@ const WebScoket = require('ws')
 const msgcrypt = require('./msgcrypt.js')
 const elec = require('electron')
 const message = "далбаю"
-let key //оставляем как есть, ключ будет определён при его получении
+let key, window //оставляем как есть, ключ будет определён при его получении
 
 // Подключаемся к серверу
 const srv = new WebScoket('ws://localhost:8080')
@@ -25,7 +25,9 @@ srv.onmessage = event => {
     else {
         const decryptedMessage = msgcrypt.decryptMessage(msg,key)
         console.log('[Server]',decryptedMessage)
-        elec.ipcMain.emit('wsMsg',decryptedMessage)
+        if(window!=undefined){
+            window.webContents.send('wsMsgIn',decryptedMessage)
+        }
         // srv.send(encryptMessage(message,"msg"))
     }
 }
@@ -35,8 +37,10 @@ srv.onclose = event => {
 }
 
 elec.ipcMain.on('wsMsgSend',(event, msg)=>{
-    const webContents = event.sender
-    const win = elec.BrowserWindow.fromWebContents(webContents)
     srv.send(msgcrypt.encryptMessage(msg,"msg",key))
     console.log('Sending',msg)
 })
+
+module.exports.init = (data) => {
+    window = data
+}
