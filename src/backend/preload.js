@@ -31,6 +31,7 @@ function handleError(e) {
 }
 
 elec.contextBridge.exposeInMainWorld('ws', {
+  connect: (ip,callback) => {elec.ipcRenderer.send('wsConnectByIp',ip);elec.ipcRenderer.on('wsConnectCallback',callback)},
   send: (msg) => {elec.ipcRenderer.send('wsMsgSend',msg)},
   onMsg: (callback) => {elec.ipcRenderer.on('wsMsgIn',callback)}
 })

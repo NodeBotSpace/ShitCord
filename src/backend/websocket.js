@@ -3,10 +3,6 @@ const msgcrypt = require('./msgcrypt')
 const elec = require('electron')
 
 function releaseListeners(srv,win) {
-    srv.onopen = event => {
-        console.log('Connected.')
-    }
-
     let key
 
     srv.onmessage = event => {
@@ -14,7 +10,6 @@ function releaseListeners(srv,win) {
 
         // Выполняем проверку на ключ
         if (msg.type == 'msgKey') {
-            console.log('Server message:', msg)
             key = Buffer.from(msg.data, 'hex')
             console.log('Key received:', key.toString('hex'))
         }
@@ -44,8 +39,10 @@ function releaseListeners(srv,win) {
 module.exports = {
     init(ip, win) {
         let srv
-        try {srv = new WebScoket(err)}
-        catch (err) {return console.log('ws:', err)}
+        try {srv = new WebScoket(ip)}
+        catch (err) {console.log('ws:', err);return {"status":false,"data":err}}
         releaseListeners(srv,win)
+        console.log('Connected to',ip)
+        return {"status":true,"data":"success"}
     }
 }

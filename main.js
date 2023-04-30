@@ -19,10 +19,16 @@ elec.app.whenReady().then(() => {
     })
     window.loadFile(path.join(__dirname,'/src/frontend/index.html'))
     window.maximize()
+
     elec.desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
         for (const source of sources) {
             return window.webContents.send('SET_SOURCE', source.id)
         }
+    })
+
+    elec.ipcMain.on('wsConnectByIp', (event,ip) => {
+        let out = require(path.join(__dirname,'src/backend/websocket.js')).init(ip,window)
+        window.webContents.send('wsConnectCallback',out)
     })
 })
 
