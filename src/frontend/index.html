@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title id="windowTitle">ShitCord</title>
+    <meta charset="utf-8" content="width=device-width">
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="app.ico">
+  </head>
+
+<body>
+  <div id="init">
+    <input id="wsIp" placeholder="ws://localhost:8080">
+    <button id="wsConnectBtn">Connect</button>
+  </div>
+
+  <div id="testStream" hidden>
+    <video id="stream" controls hidden muted width=1280></video>
+    <button id="toggleStreamBtn"></button>
+  </div>
+
+  <div id="wsChat" hidden class="wsChat">
+    <div id="wsMsgBox">
+      <p id="initMsg">There is no messages right now...</p>
+    </div>
+    <input id="wsMsgInput" placeholder="Написать в чат.">
+  </div>
+
+
+  <script src="../backend/renderer.js"></script>
+</body>
+
+</html>

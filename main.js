@@ -1,15 +1,15 @@
 const elec = require('electron')
 //require('update-electron-app')()
-const path = require('path')
+const path = require('node:path')
 
 elec.app.setName('ShitCord')
 elec.app.whenReady().then(() => {
     const window = new elec.BrowserWindow({
         width: 800,
         height: 600,
-        icon: './app.ico',
+        icon: path.join(__dirname,'/src/frontend/app.ico'),
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname,'/src/backend/preload.js')
         },
         titleBarStyle: 'hidden',
         // webPreferences: {
@@ -17,14 +17,13 @@ elec.app.whenReady().then(() => {
         // }
 
     })
-    window.loadFile('index.html')
+    window.loadFile(path.join(__dirname,'/src/frontend/index.html'))
     window.maximize()
     elec.desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
         for (const source of sources) {
             return window.webContents.send('SET_SOURCE', source.id)
         }
     })
-    require('./websocket.js').init(window)
 })
 
 elec.app.on('window-all-closed', () => {
