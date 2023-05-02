@@ -27,8 +27,7 @@ elec.app.whenReady().then(() => {
     })
 
     elec.ipcMain.on('wsConnectByIp', (event,ip) => {
-        let out = require(path.join(__dirname,'src/backend/websocket.js')).init(ip,window)
-        window.webContents.send('wsConnectCallback',out)
+        require(path.join(__dirname,'src/backend/websocket.js')).init(ip,window)
     })
 })
 

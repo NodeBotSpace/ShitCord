@@ -9,8 +9,14 @@
 
 <body>
   <div id="init">
-    <input id="wsIp" placeholder="ws://localhost:8080">
+    <input id="wsIp" placeholder="Your ip here." value="ws://localhost:8080">
     <button id="wsConnectBtn">Connect</button>
+  </div>
+
+  <div id="disconnectReason" hidden>
+    <p class="message">Вы были отключены от сервера.</p>
+    <p id="reason"></p>
+    <button id="confirmLeave" class="mcBtn">Ок</button>
   </div>
 
   <div id="testStream" hidden>

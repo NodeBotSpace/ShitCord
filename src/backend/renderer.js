@@ -30,7 +30,7 @@ wsMsgInput.addEventListener('keypress', (event) => {
 // WebSocket Messages
 const wsMsgBox = document.getElementById('wsMsgBox')
 window.ws.onMsg((event, msg) => {
-    const p = createElement('p',{'id':'wsMsg'},msg)
+    const p = createElement('p',{'class':'wsMsg'},msg)
     wsMsgBox.appendChild(p)
 })
 
@@ -38,16 +38,30 @@ window.ws.onMsg((event, msg) => {
 const wsIp = document.getElementById('wsIp')
 const wsConnectBtn = document.getElementById('wsConnectBtn')
 wsConnectBtn.onclick=()=>{
-    console.log('click')
-    console.log(wsIp.value,typeof(wsIp.value))
     let ip = wsIp.value
-    if(ip.replace(/\s/g,'')=='') ip="ws://localhost:8080"
+    if(ip.replace(/\s/g,'')=='') return
     window.ws.connect(ip,(event,out)=>{
-        console.log('wsConnection:',out.data)
-        if(out.status==true){
+        console.log(out)
+        if(out==true){
             document.getElementById('init').hidden=true
             // document.getElementById('testStream').hidden=false
             document.getElementById('wsChat').hidden=false
         }
     })
+}
+
+const disconnectReason = document.getElementById('reason')
+window.ws.onDisconnect((event, reason)=>{
+    // document.getElementById('init').hidden=false
+    // document.getElementById('testStream').hidden=true
+    document.getElementById('disconnectReason').hidden=false
+    document.getElementById('wsChat').hidden=true
+    disconnectReason.innerText="Причина: "+reason
+    wsMsgBox.innerHTML=''
+})
+
+const confirmLeaveBtn = document.getElementById('confirmLeave')
+confirmLeaveBtn.onclick=()=>{
+    document.getElementById('disconnectReason').hidden=true
+    document.getElementById('init').hidden=false
 }
