@@ -12,8 +12,8 @@ class Wrapper {
     //
     this.nickname = nickname;
     this.ip = ip;
-    this.key = null;
-    this.session = null;
+    this.key = Buffer.from("1df255fa2d20b69ee2b320b90edca5fe5cca38817914acdab587b1109292ccf8",'hex');
+    this.session = new ws(this.ip),
     //
     this.crypt = new Crypt(this),
       this.auth = new Auth(this),
@@ -21,10 +21,6 @@ class Wrapper {
   }
   setKey(key) {
     this.key = key;
-  }
-  newSession(obj){
-    this.session = obj;
-    return this.session;
   }
 }
 module.exports = Wrapper

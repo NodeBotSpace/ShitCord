@@ -10,9 +10,8 @@ class Messages {
         this.session = obj.session;
     }
     send() {
-        console.log(this.session);
         const encrypted = this.crypt.encryptMessage('Hello world!', this.key);
-        this.session.send({ type: "msg", data: encrypted });
+        this.session.send(JSON.stringify({ type: "msg", data: encrypted }));
         // return this.crypt.decryptMessage(encrypted.data,encrypted.iv,key)
     }
     on() {

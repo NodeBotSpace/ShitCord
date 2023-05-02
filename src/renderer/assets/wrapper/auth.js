@@ -8,15 +8,12 @@ class Auth {
         this.key = obj.key;
         this.setKey = obj.setKey;
         this.session = obj.session;
-        this.newSession = obj.newSession;
 
         // this.loginData = null;
     }
     signin() {
-        const session = new this.ws(this.ip)
-
         let dataPromise = new Promise(resolve => {
-          session.once('message', event => {
+          this.session.once('message', event => {
             const msg = JSON.parse(event.toString());
             if (msg.type === 'msgKey') {
               this.setKey(Buffer.from(msg.data, 'hex'));
@@ -25,7 +22,6 @@ class Auth {
             }
           });
         });
-        this.newSession(session)
         return dataPromise;
     }
     logout() {
