@@ -2,6 +2,10 @@ const WebSocket = require('ws')
 const msgcrypt = require('./msgcrypt')
 const elec = require('electron')
 
+function constrcutMsg(type,data,key){
+    return JSON.stringify({type: type, data: msgcrypt.encryptMessage(data,key)})
+}
+
 function releaseListeners(srv,win) {
     let key
 
@@ -9,20 +13,21 @@ function releaseListeners(srv,win) {
         const msg = JSON.parse(event.data)
 
         // Выполняем проверку на ключ
-        if (msg.type == 'msgKey') {
+        if (msg.type == 'key') {
             key = Buffer.from(msg.data, 'hex')
             console.log('Key received:', key.toString('hex'))
         }
 
         // Иначе парсим как обычное сообщение
-        else {
+        else if(msg.type=='msg'){
             try{
-                const decryptedMessage = msgcrypt.decryptMessage(msg, key)
+                const decryptedMessage = msgcrypt.decryptMessage(msg.data, key)
                 console.log('[Server]', decryptedMessage)
-                win.webContents.send('wsMsgIn', '[Server] ' + decryptedMessage)
-            }catch{
-                console.log('[Server]', msg)
-                win.webContents.send('wsMsgIn', '[Server] '+ msg)
+                win.webContents.send('wsMsgIn', decryptedMessage)
+            }catch(err){
+                console.log(err)
+                console.log('[Server(U)]', msg.data)
+                win.webContents.send('wsMsgIn', msg.data)
             }
             // srv.send(encryptMessage(message,"msg"))
         }
@@ -30,8 +35,14 @@ function releaseListeners(srv,win) {
 
     function wsMsgSend(event, msg) {
         if(key){
-            srv.send(msgcrypt.encryptMessage(msg, "msg", key))
-            console.log('Send(S) >', msg)
+            if(msg.startsWith('/auth ')){
+                const login = msg.split(' ')[1]
+                const pass = msg.split(' ')[2]
+                srv.send(JSON.stringify({type:'auth',login:msgcrypt.encryptMessage(login,key),password:msgcrypt.encryptMessage(pass,key)}))
+            }else{
+                srv.send(constrcutMsg('msg',msg,key))
+                console.log('Send >', msg)
+            }
         }else{
             srv.send(msg)
             // srv.send(JSON.stringify({type:"msg",data:msg}))

@@ -7,18 +7,18 @@ elec.app.whenReady().then(() => {
     const window = new elec.BrowserWindow({
         width: 800,
         height: 600,
-        icon: path.join(__dirname,'/src/frontend/app.ico'),
+        icon: path.join(__dirname,'/src/renderer/app.ico'),
         webPreferences: {
-            preload: path.join(__dirname,'/src/backend/preload.js')
+            preload: path.join(__dirname,'/src/scripts/preload.js')
         },
-        titleBarStyle: 'hidden',
+        // titleBarStyle: 'hidden',
         // webPreferences: {
         //     nodeIntegration: true
         // }
 
     })
-    window.loadFile(path.join(__dirname,'/src/frontend/index.html'))
-    window.maximize()
+    window.loadFile(path.join(__dirname,'/src/renderer/index.html'))
+    // window.maximize()
 
     elec.desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
         for (const source of sources) {
@@ -27,7 +27,7 @@ elec.app.whenReady().then(() => {
     })
 
     elec.ipcMain.on('wsConnectByIp', (event,ip) => {
-        require(path.join(__dirname,'src/backend/websocket.js')).init(ip,window)
+        require(path.join(__dirname,'src/scripts/websocket.js')).init(ip,window)
     })
 })
 
