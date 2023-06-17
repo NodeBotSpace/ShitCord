@@ -1,35 +1,24 @@
 {
-  "name": "shitcord",
-  "version": "0.0.1",
-  "description": "Shitty copy of discord. I didn't even wrote smth on electron, so I don't know when it'll released",
-  "main": "main.js",
+  "name": "shitcord-tauri",
+  "private": true,
   "scripts": {
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "start": "electron ."
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "tauri": "tauri"
   },
-  "author": "Kotisoff",
-  "license": "ISC",
   "devDependencies": {
-    "@electron-forge/cli": "^6.1.1",
-    "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "^24.0.0"
+    "@tauri-apps/cli": "^1.2.3",
+    "nuxt": "^3.4.0"
   },
   "dependencies": {
-    "update-electron-app": "^2.0.1",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
+    "@pinia/nuxt": "^0.4.11",
+    "@tauri-apps/api": "^1.2.0",
+    "isomorphic-ws": "^5.0.0",
     "ws": "^8.13.0"
   },
-  "config": {
-    "forge": {
-      "makers": [
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin",
-            "win32"
-          ]
-        }
-      ]
-    }
-  }
+  "type": "module"
 }
