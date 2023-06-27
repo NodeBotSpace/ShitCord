@@ -4,17 +4,6 @@
     </div>
 </template>
 <script setup>
-    const props = defineProps({
-        ws:{
-            type: Object,
-            default: null
-        }//     >3(
-    })
-    let div = []
-    props.ws.session.onmessage = event => {
-        console.log(event.data)
-        div.push(event.data)
-    }
 </script>
 <style scoped>
     div {

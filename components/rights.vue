@@ -27,6 +27,6 @@
         font-family: mc;
         padding: 0;
         margin: 0.5em;
-        color: #333539;
+        color: #373a3e;
     }
 </style>

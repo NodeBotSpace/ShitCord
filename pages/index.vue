@@ -11,6 +11,14 @@
     </div>
 </template>
 <script setup>
+    import {useUserStore} from "~/stores/userdata"
+    import wrapper from "~/assets/wrapper/index.js";
+    const router = useRouter()
+
+    const userStore = useUserStore()
+    if(!userStore.user.ws){
+        router.replace("/signin")
+    }
 </script>
 <style scoped>
     .links p{

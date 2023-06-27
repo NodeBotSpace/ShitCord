@@ -1,0 +1,10 @@
+@font-face {
+    font-family: mc;
+    src: local("Minecraft Rus Regular");
+}
+
+html {
+    font-family: mc;
+    background-color: #2C2F33;
+    color: #FFFFFF;
+}

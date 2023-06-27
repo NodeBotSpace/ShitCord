@@ -1,7 +1,7 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
     // import styles
-    css: [],
+    css: ["~/assets/style.css"],
     // enable takeover mode
     typescript: { shim: false },
     build: {},

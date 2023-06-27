@@ -5,17 +5,12 @@
     </div>
 </template>
 <script setup>
-    const code="Нет"
+    const code="none"
 </script>
 <style scoped>
     p{
         font-size: 100px;
         margin: 0;
-        padding-right: 30px;
-    }
-    div{
-        position: fixed;
-        display: flex;
-        flex-direction: row;
+        padding-right: 20px;
     }
 </style>
